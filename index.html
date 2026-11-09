@@ -25,8 +25,7 @@ body.bg-fr{background:linear-gradient(to bottom,#031412,#092b26 55%,#041714)}
 .river{position:fixed;bottom:0;left:0;width:100%;height:38vh;background:#061124;border-top:2px solid rgba(255,215,0,0.3);z-index:2;overflow:hidden}
 .box{position:relative;z-index:20;background:rgba(15,26,52,0.92);border:1px solid #ffd700;border-radius:16px;padding:15px;margin-top:60px;width:92%;max-width:400px;text-align:center}
 h1{font-size:18px;color:#ffd700;margin-bottom:4px}
-.status{font-size:11px;color:#81c784;margin-bottom:6px}
-.prev{background:rgba(0,0,0,0.35);border:1px dashed #ffd700;border-radius:12px;padding:6px;margin:6px 0;min-height:95px;display:flex;justify-content:center;align-items:center}
+.prev{background:rgba(0,0,0,0.35);border:1px dashed #ffd700;border-radius:12px;padding:6px;margin:8px 0;min-height:95px;display:flex;justify-content:center;align-items:center}
 .lbl{font-size:12px;color:#cbd5e1;text-align:left;margin:6px 0 3px;display:block}
 .row{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
 .bb{flex:1;padding:6px;font-size:12px;background:rgba(255,255,255,0.1);border:1px solid transparent;border-radius:8px;color:#fff;cursor:pointer}
@@ -40,65 +39,9 @@ input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px soli
 .tg b{color:#ffd700;display:block}
 @keyframes flt{0%{left:-150px}100%{left:110vw}}
 </style>
-</head>
-<body>
-<audio id="bgAudio" src="song.mp3" loop preload="auto"></audio>
-<div class="top">
-<button class="pbtn" id="mBtn">🔇 เปิดเพลง</button>
-<div class="sws">
-<button class="bgo on" data-bg="">🌕 เดือนเพ็ญ</button>
-<button class="bgo" data-bg="bg-fw">🎆 พลุ</button>
-<button class="bgo" data-bg="bg-fr">🌿 หิ่งห้อย</button>
-</div>
-</div>
-<div class="sky"><div class="moon"></div><div id="fx"></div></div>
-<div class="box">
-<h1>🌕 ออกแบบกระทงออนไลน์</h1>
-<div class="status" id="dbStatus">🟢 อัปเดตสำเร็จ พร้อมลอยกระทง!</div>
-<div class="prev" id="pv"></div>
-<span class="lbl">1. รูปแบบกระทง:</span>
-<div class="row" id="typeRow">
-<button class="bb on" data-t="banana">ใบตอง</button>
-<button class="bb" data-t="lotus">กลีบบัว</button>
-<button class="bb" data-t="coconut">กะลา</button>
-<button class="bb" data-t="bread">ขนมปัง</button>
-</div>
-<span class="lbl">2. โทนสีกลีบ / วัสดุ:</span>
-<div class="row" id="petalRow">
-<div class="dot on" style="background:#4caf50" data-c="#4caf50"></div>
-<div class="dot" style="background:#f48fb1" data-c="#f48fb1"></div>
-<div class="dot" style="background:#ce93d8" data-c="#ce93d8"></div>
-<div class="dot" style="background:#fff59d" data-c="#fff59d"></div>
-<div class="dot" style="background:#ffffff" data-c="#ffffff"></div>
-</div>
-<span class="lbl">3. สีดอกไม้ & เทียน:</span>
-<div class="row" id="flowerRow">
-<div class="dot on" style="background:#ffeb3b" data-c="#ffeb3b"></div>
-<div class="dot" style="background:#ff5252" data-c="#ff5252"></div>
-<div class="dot" style="background:#ff9800" data-c="#ff9800"></div>
-<div class="dot" style="background:#e040fb" data-c="#e040fb"></div>
-<div class="dot" style="background:#00e5ff" data-c="#00e5ff"></div>
-</div>
-<input type="text" id="un" placeholder="ชื่อของคุณ (เช่น สมชาย)" maxlength="25">
-<input type="text" id="uw" placeholder="คำอธิษฐาน (เช่น ขอให้มีความสุข)" maxlength="60">
-<button class="go" id="goBtn">✨ ปล่อยกระทงลงน้ำ ✨</button>
-</div>
-<div class="river" id="rv"></div>
-
 <script>
-// ใส่ค่า Firebase ของคุณตรงนี้ (หากยังไม่ใส่ จะทำงานโหมดปกติทันทีไม่ค้าง)
-var firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_://firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_://appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-
 var d = { t: "banana", p: "#4caf50", f: "#ffeb3b" };
 var pl = 0;
-var db = null;
 
 function mkSvg(c, w) {
   var t = c.t || "banana", p = c.p || "#4caf50", f = c.f || "#ffeb3b";
@@ -117,7 +60,8 @@ function mkSvg(c, w) {
 }
 
 function upPv() {
-  document.getElementById("pv").innerHTML = mkSvg(d, 88);
+  var pv = document.getElementById("pv");
+  if (pv) pv.innerHTML = mkSvg(d, 88);
 }
 
 function togM(force) {
@@ -139,12 +83,89 @@ function togM(force) {
 
 function setBg(c, el) {
   document.body.className = c;
-  document.querySelectorAll(".bgo").forEach(function(x) { x.classList.remove("on"); });
+  var btns = document.querySelectorAll(".bgo");
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove("on");
   if (el) el.classList.add("on");
   var fx = document.getElementById("fx");
+  if (!fx) return;
   fx.innerHTML = "";
   if (c === "") {
     for (var i = 0; i < 9; i++) {
       var l = document.createElement("div");
       l.className = "lnt";
       l.style.left = (Math.random() * 90 + 5) + "%";
+      l.style.bottom = "10px";
+      l.style.animationDuration = (Math.random() * 5 + 7) + "s";
+      l.style.animationDelay = (Math.random() * 4) + "s";
+      fx.appendChild(l);
+    }
+  } else if (c === "bg-fw") {
+    for (var j = 0; j < 5; j++) {
+      var w = document.createElement("div");
+      w.className = "fwk";
+      w.style.left = (Math.random() * 80 + 10) + "%";
+      w.style.top = (Math.random() * 40 + 15) + "%";
+      w.style.animationDelay = (j * 0.45) + "s";
+      fx.appendChild(w);
+    }
+  } else if (c === "bg-fr") {
+    for (var k = 0; k < 22; k++) {
+      var y = document.createElement("div");
+      y.className = "fly";
+      y.style.left = (Math.random() * 95) + "%";
+      y.style.top = (Math.random() * 85) + "%";
+      y.style.animationDelay = (Math.random() * 3) + "s";
+      fx.appendChild(y);
+    }
+  }
+}
+
+function setT(val, el) {
+  d.t = val;
+  var btns = el.parentElement.querySelectorAll(".bb");
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove("on");
+  el.classList.add("on");
+  if (val === "lotus") d.p = "#f48fb1";
+  else if (val === "banana") d.p = "#4caf50";
+  upPv();
+}
+
+function setC(k, v, el) {
+  d[k] = v;
+  var dots = el.parentElement.querySelectorAll(".dot");
+  for (var i = 0; i < dots.length; i++) dots[i].classList.remove("on");
+  el.classList.add("on");
+  upPv();
+}
+
+function spawn(n, w, cfg) {
+  var rv = document.getElementById("rv");
+  if (!rv) return;
+  var el = document.createElement("div");
+  el.className = "kt";
+  var top = Math.floor(Math.random() * 42) + 15;
+  el.style.top = top + "%";
+  el.style.zIndex = top;
+  el.innerHTML = '<div class="tg"><b>' + n + '</b>' + w + '</div>' + mkSvg(cfg, 75);
+  rv.appendChild(el);
+  setTimeout(function() { el.remove(); }, 28000);
+}
+
+function goK() {
+  if (!pl) togM(true);
+  var nEl = document.getElementById("un"), wEl = document.getElementById("uw");
+  var name = nEl.value.trim() || "ผู้ไม่ประสงค์ออกนาม";
+  var wish = wEl.value.trim() || "ขอให้มีความสุขความเจริญ";
+  wEl.value = "";
+  spawn(name, wish, { t: d.t, p: d.p, f: d.f });
+}
+
+window.onload = function() {
+  upPv();
+  setBg("", null);
+  setTimeout(function() { spawn("กระทงกลีบบัว", "ขอให้มีความสุขสมหวัง", { t: "lotus", p: "#f48fb1", f: "#ffeb3b" }); }, 600);
+  setTimeout(function() { spawn("กระทงขนมปังเต่า", "สุขภาพแข็งแรงตลอดปี", { t: "bread", p: "#ff9800", f: "#ff5252" }); }, 3500);
+};
+</script>
+</head>
+<body>
