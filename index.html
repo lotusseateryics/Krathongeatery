@@ -6,53 +6,61 @@
 <title>ลอยกระทงออนไลน์</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:sans-serif}
-body{background:linear-gradient(#070b19,#111d3a 55%,#081226);color:#fff;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center}
-body.fw{background:linear-gradient(#12071f,#2b1042 55%,#140824)}
-body.fr{background:linear-gradient(#031412,#092b26 55%,#041714)}
-.top{position:fixed;top:12px;left:0;width:100%;padding:0 12px;z-index:30;display:flex;justify-content:space-between}
-.btn,.bo{background:#0f1a34;border:1px solid #ffd700;color:#ffd700;padding:6px 11px;border-radius:20px;font-size:12px}
-.sw{display:flex;gap:3px;background:#0f1a34;border:1px solid #ffd700;padding:3px;border-radius:20px}
-.bo{border:none;color:#ccc;padding:4px 8px}.bo.on{background:#ffd700;color:#000;font-weight:bold}
-.sky{position:fixed;top:0;left:0;width:100%;height:60vh;pointer-events:none;z-index:1;overflow:hidden}
-.moon{position:absolute;top:55px;right:10%;width:60px;height:60px;background:#fff8d6;border-radius:50%;box-shadow:0 0 30px #ffea85}
-.lnt{position:absolute;width:14px;height:18px;background:radial-gradient(#fff59d,#ff9800);border-radius:4px;box-shadow:0 0 10px #ff9800;animation:up 8s linear infinite}
-@keyframes up{0%{transform:translateY(80px);opacity:0}20%{opacity:1}100%{transform:translateY(-400px);opacity:0}}
-.fwk{position:absolute;width:6px;height:6px;border-radius:50%;animation:bm 1.5s infinite}
-@keyframes bm{0%{transform:scale(.1);opacity:1}100%{transform:scale(1);opacity:0;box-shadow:0 -35px 0 #ff4081,30px -15px 0 #ffd700,30px 15px 0 #00e5ff,0 35px 0 #76ff03,-30px 15px 0 #e040fb,-30px -15px 0 #ff9100}}
-.fly{position:absolute;width:5px;height:5px;background:#aeea00;border-radius:50%;box-shadow:0 0 8px #aeea00;animation:bk 2s infinite alternate}
-@keyframes bk{0%{opacity:.1}100%{opacity:1;transform:translate(12px,-12px)}}
-.rv{position:fixed;bottom:0;left:0;width:100%;height:38vh;background:#061124;border-top:2px solid rgba(255,215,0,.3);z-index:2;overflow:hidden}
-.box{position:relative;z-index:20;background:rgba(15,26,52,.92);border:1px solid #ffd700;border-radius:16px;padding:14px;margin-top:58px;width:92%;max-width:390px;text-align:center}
-h1{font-size:18px;color:#ffd700;margin-bottom:6px}
-.pv{background:rgba(0,0,0,.35);border:1px dashed #ffd700;border-radius:12px;padding:6px;margin:6px 0;min-height:90px;display:flex;justify-content:center;align-items:center}
-.lb{font-size:12px;color:#cbd5e1;text-align:left;margin:5px 0 3px;display:block}
-.rw{display:flex;gap:6px;margin-bottom:6px}
-.bb{flex:1;padding:6px;font-size:12px;background:rgba(255,255,255,.1);border:1px solid transparent;border-radius:8px;color:#fff}
-.bb.on{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.2)}
-.dt{width:25px;height:25px;border-radius:50%;border:2px solid rgba(255,255,255,.2)}
+body{background:linear-gradient(to bottom,#070b19,#111d3a 55%,#081226);color:#fff;min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;transition:background 0.8s}
+body.bg-fw{background:linear-gradient(to bottom,#12071f,#2b1042 55%,#140824)}
+body.bg-fr{background:linear-gradient(to bottom,#031412,#092b26 55%,#041714)}
+.top{position:fixed;top:12px;left:0;width:100%;padding:0 12px;z-index:30;display:flex;justify-content:space-between;gap:6px}
+.pbtn,.bgo{background:#0f1a34;border:1px solid #ffd700;color:#ffd700;padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer}
+.sws{display:flex;gap:3px;background:#0f1a34;border:1px solid #ffd700;padding:3px;border-radius:20px}
+.bgo{border:none;color:#ccc;padding:4px 8px}
+.bgo.on{background:#ffd700;color:#000;font-weight:bold}
+.sky{position:fixed;top:0;left:0;width:100%;height:62vh;pointer-events:none;z-index:1;overflow:hidden}
+.moon{position:absolute;top:55px;right:10%;width:65px;height:65px;background:#fff8d6;border-radius:50%;box-shadow:0 0 30px #ffea85}
+body.bg-fr .moon{background:#b9f6ca;box-shadow:0 0 30px #69f0ae}
+.lnt{position:absolute;width:14px;height:18px;background:radial-gradient(circle,#fff59d 10%,#ff9800 90%);border-radius:4px;box-shadow:0 0 12px #ff9800;animation:up 9s linear infinite}
+@keyframes up{0%{transform:translateY(80px) scale(0.8);opacity:0}20%{opacity:0.9}100%{transform:translateY(-420px) scale(0.4);opacity:0}}
+.fwk{position:absolute;width:6px;height:6px;border-radius:50%;animation:bm 1.6s ease-out infinite}
+@keyframes bm{0%{transform:scale(0.1);opacity:1}100%{transform:scale(1);opacity:0;box-shadow:0 -38px 0 #ff4081,32px -18px 0 #ffd700,32px 18px 0 #00e5ff,0 38px 0 #76ff03,-32px 18px 0 #e040fb,-32px -18px 0 #ff9100}}
+.fly{position:absolute;width:5px;height:5px;background:#aeea00;border-radius:50%;box-shadow:0 0 10px #aeea00;animation:bk 2.5s ease-in-out infinite alternate}
+@keyframes bk{0%{opacity:0.1;transform:translate(0,0)}100%{opacity:1;transform:translate(15px,-15px)}}
+.rv{position:fixed;bottom:0;left:0;width:100%;height:38vh;background:#061124;border-top:2px solid rgba(255,215,0,0.3);z-index:2;overflow:hidden}
+.box{position:relative;z-index:20;background:rgba(15,26,52,0.92);border:1px solid #ffd700;border-radius:16px;padding:15px;margin-top:58px;width:92%;max-width:400px;text-align:center}
+h1{font-size:18px;color:#ffd700;margin-bottom:4px}
+.st{font-size:11px;color:#81c784;margin-bottom:6px}
+.pv{background:rgba(0,0,0,0.35);border:1px dashed #ffd700;border-radius:12px;padding:6px;margin:6px 0;min-height:92px;display:flex;justify-content:center;align-items:center}
+.lb{font-size:12px;color:#cbd5e1;text-align:left;margin:6px 0 3px;display:block}
+.rw{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.bb{flex:1;padding:6px;font-size:12px;background:rgba(255,255,255,0.1);border:1px solid transparent;border-radius:8px;color:#fff;cursor:pointer}
+.bb.on{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.2)}
+.dt{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);cursor:pointer}
 .dt.on{border-color:#ffd700;transform:scale(1.15)}
-input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px solid #555;background:rgba(0,0,0,.4);color:#fff;font-size:14px}
-.go{width:100%;padding:11px;border:none;border-radius:8px;background:#f59e0b;color:#fff;font-size:15px;font-weight:bold}
-.kt{position:absolute;display:flex;flex-direction:column;align-items:center;animation:flt 25s linear forwards;z-index:5}
-.tg{background:rgba(0,0,0,.8);border:1px solid #ffd700;padding:3px 8px;border-radius:10px;font-size:11px;margin-bottom:2px;white-space:nowrap}
+input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px solid #555;background:rgba(0,0,0,0.4);color:#fff;font-size:14px}
+.go{width:100%;padding:11px;border:none;border-radius:8px;background:#f59e0b;color:#fff;font-size:15px;font-weight:bold;cursor:pointer}
+.kt{position:absolute;display:flex;flex-direction:column;align-items:center;animation:flt 26s linear forwards;z-index:5}
+.tg{background:rgba(0,0,0,0.8);border:1px solid #ffd700;padding:3px 8px;border-radius:10px;font-size:11px;margin-bottom:2px;white-space:nowrap}
 .tg b{color:#ffd700;display:block}
-@keyframes flt{0%{left:-140px}100%{left:110vw}}
+@keyframes flt{0%{left:-150px}100%{left:110vw}}
 </style>
 </head>
 <body>
-<audio id="au" src="song.mp3" loop></audio>
+<audio id="au" src="song.mp3" loop preload="auto"></audio>
+
 <div class="top">
-<button class="btn" id="mb" onclick="togM()">🔇 เปิดเพลง</button>
-<div class="sw">
-<button class="bo on" onclick="sBg('',this)">🌕 เดือนเพ็ญ</button>
-<button class="bo" onclick="sBg('fw',this)">🎆 พลุ</button>
-<button class="bo" onclick="sBg('fr',this)">🌿 หิ่งห้อย</button>
+<button class="pbtn" id="mb" onclick="togM()">🔇 เปิดเพลง</button>
+<div class="sws">
+<button class="bgo on" onclick="sBg('',this)">🌕 เดือนเพ็ญ</button>
+<button class="bgo" onclick="sBg('bg-fw',this)">🎆 พลุ</button>
+<button class="bgo" onclick="sBg('bg-fr',this)">🌿 หิ่งห้อย</button>
 </div>
 </div>
+
 <div class="sky"><div class="moon"></div><div id="fx"></div></div>
+
 <div class="box">
 <h1>🌕 ออกแบบกระทงออนไลน์</h1>
+<div class="st" id="dbSt">🟢 พร้อมลอยกระทง</div>
 <div class="pv" id="pv"></div>
+
 <span class="lb">1. รูปแบบกระทง:</span>
 <div class="rw">
 <button class="bb on" onclick="sT('banana',this)">ใบตอง</button>
@@ -60,7 +68,8 @@ input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px soli
 <button class="bb" onclick="sT('coconut',this)">กะลา</button>
 <button class="bb" onclick="sT('bread',this)">ขนมปัง</button>
 </div>
-<span class="lb">2. โทนสีกลีบ:</span>
+
+<span class="lb">2. โทนสีกลีบ / วัสดุ:</span>
 <div class="rw">
 <div class="dt on" style="background:#4caf50" onclick="sC('p','#4caf50',this)"></div>
 <div class="dt" style="background:#f48fb1" onclick="sC('p','#f48fb1',this)"></div>
@@ -68,6 +77,7 @@ input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px soli
 <div class="dt" style="background:#fff59d" onclick="sC('p','#fff59d',this)"></div>
 <div class="dt" style="background:#ffffff" onclick="sC('p','#ffffff',this)"></div>
 </div>
+
 <span class="lb">3. สีดอกไม้ & เทียน:</span>
 <div class="rw">
 <div class="dt on" style="background:#ffeb3b" onclick="sC('f','#ffeb3b',this)"></div>
@@ -76,39 +86,60 @@ input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px soli
 <div class="dt" style="background:#e040fb" onclick="sC('f','#e040fb',this)"></div>
 <div class="dt" style="background:#00e5ff" onclick="sC('f','#00e5ff',this)"></div>
 </div>
-<input id="un" placeholder="ชื่อของคุณ">
-<input id="uw" placeholder="คำอธิษฐาน">
+
+<input id="un" placeholder="ชื่อของคุณ (เช่น สมชาย)" maxlength="25">
+<input id="uw" placeholder="คำอธิษฐาน (เช่น ขอให้มีความสุข)" maxlength="60">
 <button class="go" onclick="goK()">✨ ปล่อยกระทงลงน้ำ ✨</button>
 </div>
+
 <div class="rv" id="rv"></div>
+
 <script>
-var d={t:'banana',p:'#4caf50',f:'#ffeb3b'},pl=0,ac=null,tm=null,st=0;
-var nt=new Array(262,330,392,440,392,0,330,392,440,523,440,392,0,440,523,587,659,587,0,523,440,392,330,392,440,392,330,0,392,440,523,440,0,392,330,392,330,0,294,330,392,330,294,0,262,294,330,392,330,294,262,294,0,330,392,440,392,330,294,0,330,392,440,392,330,262,0);
-function svg(c,w){
-var t=c.t,p=c.p,f=c.f,top='<ellipse cx="50" cy="10" rx="4" ry="7" fill="#ff9800"/><rect x="48" y="16" width="4" height="22" fill="'+f+'"/><line x1="43" y1="14" x2="46" y2="38" stroke="#a1887f" stroke-width="1.5"/><line x1="57" y1="14" x2="54" y2="38" stroke="#a1887f" stroke-width="1.5"/>',b='';
-if(t=='lotus')b='<path d="M12,48 Q15,28 32,36 Q25,52 12,48Z" fill="'+p+'" stroke="#880e4f"/><path d="M88,48 Q85,28 68,36 Q75,52 88,48Z" fill="'+p+'" stroke="#880e4f"/><path d="M22,52 Q28,22 44,34 Q38,54 22,52Z" fill="'+p+'" stroke="#880e4f"/><path d="M78,52 Q72,22 56,34 Q62,54 78,52Z" fill="'+p+'" stroke="#880e4f"/><path d="M36,54 Q50,18 64,54 Q50,62 36,54Z" fill="'+p+'" stroke="#880e4f"/><path d="M16,50 Q50,76 84,50 Q50,62 16,50Z" fill="#2e7d32"/><circle cx="50" cy="40" r="5" fill="'+f+'"/>';
-else if(t=='coconut')b='<polygon points="22,42 36,24 50,42" fill="'+p+'"/><polygon points="50,42 64,24 78,42" fill="'+p+'"/><circle cx="36" cy="39" r="4.5" fill="'+f+'"/><circle cx="50" cy="38" r="5" fill="'+f+'"/><circle cx="64" cy="39" r="4.5" fill="'+f+'"/><path d="M14,42 A36,30 0 0,0 86,42Z" fill="#4e342e"/><circle cx="44" cy="54" r="2.2" fill="#261612"/><circle cx="56" cy="54" r="2.2" fill="#261612"/>';
-else if(t=='bread')b='<ellipse cx="50" cy="54" rx="36" ry="16" fill="#d4a373" stroke="#8d5524" stroke-width="2"/><circle cx="14" cy="52" r="7" fill="#e6ccb2" stroke="#8d5524" stroke-width="1.5"/><circle cx="12" cy="50" r="1.5" fill="#000"/><ellipse cx="28" cy="66" rx="6" ry="4" fill="#b08968"/><ellipse cx="72" cy="66" rx="6" ry="4" fill="#b08968"/><circle cx="36" cy="44" r="4.5" fill="'+p+'"/><circle cx="50" cy="42" r="5" fill="'+f+'"/><circle cx="64" cy="44" r="4.5" fill="'+p+'"/>';
-else b='<polygon points="15,44 28,24 41,44" fill="'+p+'"/><polygon points="37,44 50,21 63,44" fill="'+p+'"/><polygon points="59,44 72,24 85,44" fill="'+p+'"/><circle cx="28" cy="40" r="4" fill="'+f+'"/><circle cx="50" cy="39" r="5" fill="'+f+'"/><circle cx="72" cy="40" r="4" fill="'+f+'"/><path d="M12,44 L88,44 L76,70 Q50,76 24,70Z" fill="#1b5e20"/>';
-return '<svg width="'+w+'" height="'+(w*.85)+'" viewBox="0 0 100 85">'+top+b+'</svg>';
+// ใส่ค่า Firebase Config ของคุณตรงนี้ (หากยังไม่ใส่ จะทำงานโหมดปกติทันที)
+var firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_://firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_://appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+var d = {t:'banana', p:'#4caf50', f:'#ffeb3b'};
+var pl = 0, ac = null, tm = null, st = 0;
+var nt =;
+
+function svg(c, w) {
+  var t = c.t || 'banana', p = c.p || '#4caf50', f = c.f || '#ffeb3b';
+  var top = '<ellipse cx="50" cy="10" rx="4" ry="7" fill="#ff9800"/><rect x="48" y="16" width="4" height="22" fill="'+f+'"/><line x1="43" y1="14" x2="46" y2="38" stroke="#a1887f" stroke-width="1.5"/><line x1="57" y1="14" x2="54" y2="38" stroke="#a1887f" stroke-width="1.5"/>';
+  var b = '';
+  if (t == 'lotus') {
+    b = '<path d="M12,48 Q15,28 32,36 Q25,52 12,48Z" fill="'+p+'" stroke="#880e4f"/><path d="M88,48 Q85,28 68,36 Q75,52 88,48Z" fill="'+p+'" stroke="#880e4f"/><path d="M22,52 Q28,22 44,34 Q38,54 22,52Z" fill="'+p+'" stroke="#880e4f"/><path d="M78,52 Q72,22 56,34 Q62,54 78,52Z" fill="'+p+'" stroke="#880e4f"/><path d="M36,54 Q50,18 64,54 Q50,62 36,54Z" fill="'+p+'" stroke="#880e4f"/><path d="M16,50 Q50,76 84,50 Q50,62 16,50Z" fill="#2e7d32"/><circle cx="50" cy="40" r="5" fill="'+f+'"/>';
+  } else if (t == 'coconut') {
+    b = '<polygon points="22,42 36,24 50,42" fill="'+p+'"/><polygon points="50,42 64,24 78,42" fill="'+p+'"/><circle cx="36" cy="39" r="4.5" fill="'+f+'"/><circle cx="50" cy="38" r="5" fill="'+f+'"/><circle cx="64" cy="39" r="4.5" fill="'+f+'"/><path d="M14,42 A36,30 0 0,0 86,42Z" fill="#4e342e"/><path d="M22,50 Q50,58 78,50" stroke="#8d6e63" stroke-width="1.2" fill="none"/><circle cx="44" cy="54" r="2.2" fill="#261612"/><circle cx="56" cy="54" r="2.2" fill="#261612"/>';
+  } else if (t == 'bread') {
+    b = '<ellipse cx="50" cy="54" rx="36" ry="16" fill="#d4a373" stroke="#8d5524" stroke-width="2"/><circle cx="14" cy="52" r="7" fill="#e6ccb2" stroke="#8d5524" stroke-width="1.5"/><circle cx="12" cy="50" r="1.5" fill="#000"/><ellipse cx="28" cy="66" rx="6" ry="4" fill="#b08968"/><ellipse cx="72" cy="66" rx="6" ry="4" fill="#b08968"/><circle cx="36" cy="44" r="4.5" fill="'+p+'"/><circle cx="50" cy="42" r="5" fill="'+f+'"/><circle cx="64" cy="44" r="4.5" fill="'+p+'"/>';
+  } else {
+    b = '<polygon points="15,44 28,24 41,44" fill="'+p+'"/><polygon points="37,44 50,21 63,44" fill="'+p+'"/><polygon points="59,44 72,24 85,44" fill="'+p+'"/><circle cx="28" cy="40" r="4" fill="'+f+'"/><circle cx="50" cy="39" r="5" fill="'+f+'"/><circle cx="72" cy="40" r="4" fill="'+f+'"/><path d="M12,44 L88,44 L76,70 Q50,76 24,70Z" fill="#1b5e20"/>';
+  }
+  return '<svg width="'+w+'" height="'+(w*0.85)+'" viewBox="0 0 100 85">'+top+b+'</svg>';
 }
-function up(){document.getElementById('pv').innerHTML=svg(d,86)}
-function togM(f){
-var a=document.getElementById('au'),b=document.getElementById('mb');
-if(pl&&!f){a.pause();clearInterval(tm);pl=0;b.innerHTML='🔇 เปิดเพลง';}
-else if(!pl){pl=1;b.innerHTML='🔊 ปิดเพลง';a.play().catch(function(){
-if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();
-if(ac.state=='suspended')ac.resume();
-tm=setInterval(function(){var q=nt[st%nt.length];if(q>0){var o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=q;g.gain.setValueAtTime(.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.32);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.32)}st++},340);
-})}
-}
-function sBg(c,el){
-document.body.className=c;
-document.querySelectorAll('.bo').forEach(function(x){x.classList.remove('on')});
-if(el)el.classList.add('on');
-var fx=document.getElementById('fx');fx.innerHTML='';
-for(var i=0;i<(c=='fr'?20:7);i++){var e=document.createElement('div');e.className=c=='fw'?'fwk':(c=='fr'?'fly':'lnt');e.style.left=(Math.random()*90+5)+'%';e.style.top=c==''?'auto':(Math.random()*50+15)+'%';if(c=='')e.style.bottom='10px';e.style.animationDelay=(Math.random()*3)+'s';fx.appendChild(e)}
-}
-function sT(v,el){d.t=v;el.parentElement.querySelectorAll('.bb').forEach(function(x){x.classList.remove('on')});el.classList.add('on');if(v=='lotus')d.p='#f48fb1';else if(v=='banana')d.p='#4caf50';up()}
-function sC(k,v,el){d[k]=v;el.parentElement.querySelectorAll('.dt').forEach(function(x){x.classList.remove('on')});el.classList.add('on');up()}
-  </html>
+
+function up() { document.getElementById('pv').innerHTML = svg(d, 86); }
+
+function togM(f) {
+  var a = document.getElementById('au'), b = document.getElementById('mb');
+  if (pl && !f) {
+    a.pause(); clearInterval(tm); pl = 0; b.innerHTML = '🔇 เปิดเพลง';
+  } else if (!pl) {
+    pl = 1; b.innerHTML = '🔊 ปิดเพลง';
+    a.play().catch(function() {
+      if (!ac) ac = new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state == 'suspended') ac.resume();
+      tm = setInterval(function() {
+        var q = nt[st % nt.length];
+        if (q > 0) {
+          var o = ac.createOscillator(), g = ac.createGain();
+          o.type = 'triangle'; o.frequency.value = q;
+          g.gain.setValueAtTime(0.15, ac.currentTime);
+		</html>
