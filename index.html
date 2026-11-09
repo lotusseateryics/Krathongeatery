@@ -83,7 +83,7 @@ input{width:100%;padding:8px;margin-bottom:8px;border-radius:8px;border:1px soli
 <div class="rv" id="rv"></div>
 <script>
 var d={t:'banana',p:'#4caf50',f:'#ffeb3b'},pl=0,ac=null,tm=null,st=0;
-var nt=[262,330,392,440,392,0,330,392,440,523,440,392,0,440,523,587,659,587,0,523,440,392,330,392,440,392,330,0,392,440,523,440,0,392,330,392,330,0,294,330,392,330,294,0,262,294,330,392,330,294,262,294,0,330,392,440,392,330,294,0,330,392,440,392,330,262,0];
+var nt=new Array(262,330,392,440,392,0,330,392,440,523,440,392,0,440,523,587,659,587,0,523,440,392,330,392,440,392,330,0,392,440,523,440,0,392,330,392,330,0,294,330,392,330,294,0,262,294,330,392,330,294,262,294,0,330,392,440,392,330,294,0,330,392,440,392,330,262,0);
 function svg(c,w){
 var t=c.t,p=c.p,f=c.f,top='<ellipse cx="50" cy="10" rx="4" ry="7" fill="#ff9800"/><rect x="48" y="16" width="4" height="22" fill="'+f+'"/><line x1="43" y1="14" x2="46" y2="38" stroke="#a1887f" stroke-width="1.5"/><line x1="57" y1="14" x2="54" y2="38" stroke="#a1887f" stroke-width="1.5"/>',b='';
 if(t=='lotus')b='<path d="M12,48 Q15,28 32,36 Q25,52 12,48Z" fill="'+p+'" stroke="#880e4f"/><path d="M88,48 Q85,28 68,36 Q75,52 88,48Z" fill="'+p+'" stroke="#880e4f"/><path d="M22,52 Q28,22 44,34 Q38,54 22,52Z" fill="'+p+'" stroke="#880e4f"/><path d="M78,52 Q72,22 56,34 Q62,54 78,52Z" fill="'+p+'" stroke="#880e4f"/><path d="M36,54 Q50,18 64,54 Q50,62 36,54Z" fill="'+p+'" stroke="#880e4f"/><path d="M16,50 Q50,76 84,50 Q50,62 16,50Z" fill="#2e7d32"/><circle cx="50" cy="40" r="5" fill="'+f+'"/>';
@@ -111,3 +111,4 @@ for(var i=0;i<(c=='fr'?20:7);i++){var e=document.createElement('div');e.classNam
 }
 function sT(v,el){d.t=v;el.parentElement.querySelectorAll('.bb').forEach(function(x){x.classList.remove('on')});el.classList.add('on');if(v=='lotus')d.p='#f48fb1';else if(v=='banana')d.p='#4caf50';up()}
 function sC(k,v,el){d[k]=v;el.parentElement.querySelectorAll('.dt').forEach(function(x){x.classList.remove('on')});el.classList.add('on');up()}
+  </html>
