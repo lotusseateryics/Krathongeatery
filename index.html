@@ -7,27 +7,31 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 body{background:#12151e;color:#f1f5f9;min-height:100vh;display:flex;flex-direction:column;align-items:center}
-.stage{position:relative;width:100%;max-width:480px;height:250px;background:linear-gradient(180deg,#080d1e 0%,#122147 65%,#09152e 100%);overflow:hidden;transition:background .8s}
+.stage{position:relative;width:100%;max-width:480px;height:250px;background:linear-gradient(180deg,#080d1e 0%,#122147 65%,#09152e 100%);overflow:hidden;transition:all .8s ease}
+.stage.full{height:calc(100vh - 62px);max-width:100%}
 .stage.fw{background:linear-gradient(180deg,#160826 0%,#341252 65%,#18092b 100%)}
 .stage.fr{background:linear-gradient(180deg,#041a17 0%,#0b362f 65%,#051f1b 100%)}
 .moon{position:absolute;top:24px;right:28px;width:44px;height:44px;background:#fef08a;border-radius:50%;box-shadow:0 0 25px #fde047}
 .stage.fr .moon{background:#bbf7d0;box-shadow:0 0 25px #4ade80}
-.hill{position:absolute;bottom:95px;left:-10%;width:70%;height:35px;background:#060a17;border-radius:50% 50% 0 0;opacity:.6}
-.river{position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(180deg,rgba(15,35,75,.85),#050c1c);border-top:1px solid rgba(250,204,21,.25)}
+.hill{position:absolute;bottom:95px;left:-10%;width:70%;height:35px;background:#060a17;border-radius:50% 50% 0 0;opacity:.6;transition:bottom .8s}
+.stage.full .hill{bottom:42vh}
+.river{position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(180deg,rgba(15,35,75,.85),#050c1c);border-top:1px solid rgba(250,204,21,.25);transition:height .8s}
+.stage.full .river{height:43vh}
 .mbtn{position:absolute;top:16px;left:16px;z-index:20;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
-.lnt{position:absolute;width:10px;height:14px;background:radial-gradient(#fef08a,#f97316);border-radius:3px;box-shadow:0 0 10px #f97316;animation:up 7s linear infinite}
-@keyframes up{0%{transform:translateY(40px);opacity:0}20%{opacity:1}100%{transform:translateY(-180px);opacity:0}}
+.reopen{position:fixed;bottom:22px;right:20px;z-index:40;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:11px 18px;border-radius:25px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.5);display:none}
+.lnt{position:absolute;width:10px;height:14px;background:radial-gradient(#fef08a,#f97316);border-radius:3px;box-shadow:0 0 10px #f97316;animation:up 8s linear infinite}
+@keyframes up{0%{transform:translateY(40px);opacity:0}20%{opacity:1}100%{transform:translateY(-350px);opacity:0}}
 .fwk{position:absolute;width:5px;height:5px;border-radius:50%;animation:bm 1.5s ease-out infinite}
 @keyframes bm{0%{transform:scale(.1);opacity:1}100%{transform:scale(1);opacity:0;box-shadow:0 -28px 0 #f43f5e,24px -14px 0 #facc15,24px 14px 0 #38bdf8,0 28px 0 #4ade80,-24px 14px 0 #c084fc,-24px -14px 0 #fb923c}}
 .fly{position:absolute;width:5px;height:5px;background:#bef264;border-radius:50%;box-shadow:0 0 8px #bef264;animation:bk 2.2s ease-in-out infinite alternate}
 @keyframes bk{0%{opacity:.15}100%{opacity:1;transform:translate(10px,-10px)}}
-.stats{width:100%;max-width:480px;background:#181c26;display:grid;grid-template-columns:repeat(3,1fr);padding:12px 8px;text-align:center;border-bottom:1px solid #262b38}
+.stats{width:100%;max-width:480px;background:#181c26;display:grid;grid-template-columns:repeat(3,1fr);padding:12px 8px;text-align:center;border-bottom:1px solid #262b38;transition:max-width .8s}
+.stats.full{max-width:100%}
 .st-lbl{font-size:11px;color:#94a3b8;margin-bottom:3px}
 .st-val{font-size:14px;font-weight:700;color:#fbbf24}
 .form{width:100%;max-width:480px;padding:18px 20px 40px;display:flex;flex-direction:column;gap:14px}
 .lbl{font-size:13px;color:#cbd5e1;margin-bottom:6px;display:block}
 select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;padding:12px 14px;border-radius:10px;font-size:14px;outline:none}
-select:focus,input:focus{border-color:#3b82f6}
 .pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .pill{background:#1e2330;border:1px solid #333b4d;color:#e2e8f0;padding:9px 4px;border-radius:20px;font-size:12px;cursor:pointer;text-align:center}
 .pill.on{background:#2563eb;border-color:#3b82f6;color:#fff;font-weight:600}
@@ -36,9 +40,10 @@ select:focus,input:focus{border-color:#3b82f6}
 .dot.on{border-color:#fff;transform:scale(1.12);box-shadow:0 0 0 2px #2563eb}
 .prev-row{display:flex;align-items:center;justify-content:space-between;background:#181c26;border:1px solid #262b38;padding:10px 16px;border-radius:12px}
 .go{width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px}
-.kt{position:absolute;display:flex;flex-direction:column;align-items:center;animation:flt 20s linear forwards;z-index:10}
-.tg{background:rgba(15,23,42,.85);border:1px solid rgba(250,204,21,.4);padding:2px 7px;border-radius:8px;font-size:10px;color:#fde047;margin-bottom:2px;white-space:nowrap}
-@keyframes flt{0%{left:-90px}100%{left:105%}}
+.kt{position:absolute;display:flex;flex-direction:column;align-items:center;animation:flt 24s linear forwards;z-index:10}
+.tg{background:rgba(15,23,42,.88);border:1px solid rgba(250,204,21,.45);padding:3px 9px;border-radius:10px;font-size:11px;color:#fff;margin-bottom:2px;white-space:nowrap;text-align:center}
+.tg b{color:#fde047;display:block;font-size:11px}
+@keyframes flt{0%{left:-110px}100%{left:105%}}
 </style>
 </head>
 <body>
@@ -50,13 +55,13 @@ select:focus,input:focus{border-color:#3b82f6}
 <div id="fx"></div>
 <div class="river" id="rv"></div>
 </div>
-<div class="stats">
+<div class="stats" id="stBar">
 <div><div class="st-lbl">กระทงในแม่น้ำ</div><div class="st-val" id="cnt">0 ใบ</div></div>
 <div><div class="st-lbl">บรรยากาศงาน</div><div class="st-val" id="bgTxt">คืนเดือนเพ็ญ</div></div>
 <div><div class="st-lbl">สถานะดนตรี</div><div class="st-val" id="mTxt">ปิดเสียง</div></div>
 </div>
 
-<div class="form">
+<div class="form" id="formBox">
 <div>
 <span class="lbl">เลือกบรรยากาศฉากหลัง</span>
 <select id="bgSel" onchange="sBg(this.value)">
@@ -116,6 +121,8 @@ select:focus,input:focus{border-color:#3b82f6}
 <button class="go" onclick="goK()">✨ ปล่อยกระทงลงสู่สายน้ำ ✨</button>
 </div>
 
+<button class="reopen" id="reBtn" onclick="showForm()">➕ สร้างกระทงเพิ่ม</button>
+
 <script>
 var d={t:'banana',p:'#4ade80',f:'#facc15'},pl=0,ac=null,tm=null,st=0,total=0;
 var nt="262,330,392,440,392,0,330,392,440,523,440,392,0,440,523,587,659,587,0,523,440,392,330,392,440,392,330,0,392,440,523,440,0,392,330,392,330,0,294,330,392,330,294,0,262,294,330,392,330,294,262,294,0,330,392,440,392,330,294,0,330,392,440,392,330,262,0".split(",");
@@ -138,25 +145,42 @@ tm=setInterval(function(){var q=Number(nt[st%nt.length]);if(q>0){var o=ac.create
 })}
 }
 function sBg(v){
-var s=document.getElementById('stg');s.className='stage'+(v?' '+v:'');
+var s=document.getElementById('stg');
+var isFull=s.classList.contains('full');
+s.className='stage'+(isFull?' full':'')+(v?' '+v:'');
 document.getElementById('bgTxt').innerHTML=v=='fw'?'พลุงานวัด':(v=='fr'?'หิ่งห้อยประกาย':'คืนเดือนเพ็ญ');
 var fx=document.getElementById('fx');fx.innerHTML='';
-for(var i=0;i<(v=='fr'?18:6);i++){var e=document.createElement('div');e.className=v=='fw'?'fwk':(v=='fr'?'fly':'lnt');e.style.left=(Math.random()*88+5)+'%';e.style.top=v==''?'auto':(Math.random()*45+10)+'%';if(v=='')e.style.bottom='105px';e.style.animationDelay=(Math.random()*3)+'s';fx.appendChild(e)}
+for(var i=0;i<(v=='fr'?20:8);i++){var e=document.createElement('div');e.className=v=='fw'?'fwk':(v=='fr'?'fly':'lnt');e.style.left=(Math.random()*88+5)+'%';e.style.top=v==''?'auto':(Math.random()*45+10)+'%';if(v=='')e.style.bottom='105px';e.style.animationDelay=(Math.random()*3)+'s';fx.appendChild(e)}
 }
 function sT(v,el){d.t=v;el.parentElement.querySelectorAll('.pill').forEach(function(x){x.classList.remove('on')});el.classList.add('on');if(v=='lotus')d.p='#f43f5e';else if(v=='banana')d.p='#4ade80';up()}
 function sC(k,v,el){if(k=='p')d.p=v;else d.f=v;el.parentElement.querySelectorAll('.dot').forEach(function(x){x.classList.remove('on')});el.classList.add('on');up()}
 function sp(n,w,c){
 total++;document.getElementById('cnt').innerHTML=total+' ใบ';
-var e=document.createElement('div');e.className='kt';var t=Math.floor(Math.random()*45)+8;e.style.top=t+'px';e.style.zIndex=t;
-e.innerHTML='<div class="tg">'+n+'</div>'+svg(c,48);
+var e=document.createElement('div');e.className='kt';var t=Math.floor(Math.random()*55)+10;e.style.top=t+'px';e.style.zIndex=t;
+e.innerHTML='<div class="tg"><b>'+n+'</b>'+(w||'')+'</div>'+svg(c,58);
 document.getElementById('rv').appendChild(e);
-setTimeout(function(){e.remove()},20000);
+setTimeout(function(){e.remove()},24000);
 }
-function goK(){if(!pl)togM(1);var n=document.getElementById('un').value||'ผู้ไม่ประสงค์ออกนาม',w=document.getElementById('uw').value||'ขอให้มีความสุข';document.getElementById('uw').value='';sp(n,w,{t:d.t,p:d.p,f:d.f})}
+function goK(){
+if(!pl)togM(1);
+var n=document.getElementById('un').value||'ผู้ไม่ประสงค์ออกนาม',w=document.getElementById('uw').value||'ขอให้มีความสุข';
+document.getElementById('uw').value='';
+document.getElementById('formBox').style.display='none';
+document.getElementById('stg').classList.add('full');
+document.getElementById('stBar').classList.add('full');
+document.getElementById('reBtn').style.display='block';
+sp(n,w,{t:d.t,p:d.p,f:d.f});
+}
+function showForm(){
+document.getElementById('formBox').style.display='flex';
+document.getElementById('stg').classList.remove('full');
+document.getElementById('stBar').classList.remove('full');
+document.getElementById('reBtn').style.display='none';
+}
 up();sBg('');
-setTimeout(function(){sp('ใบตองมงคล',{t:'banana',p:'#4ade80',f:'#facc15'})},300);
-setTimeout(function(){sp('บัวชมพู',{t:'lotus',p:'#f43f5e',f:'#facc15'})},2500);
-setTimeout(function(){sp('กะลารักษ์โลก',{t:'coconut',p:'#a855f7',f:'#06b6d4'})},5000);
+setTimeout(function(){sp('ใบตองมงคล','สุขสันต์วันลอยกระทง',{t:'banana',p:'#4ade80',f:'#facc15'})},300);
+setTimeout(function(){sp('บัวชมพู','ขอให้สมหวังทุกประการ',{t:'lotus',p:'#f43f5e',f:'#facc15'})},2500);
+setTimeout(function(){sp('กะลารักษ์โลก','สุขภาพแข็งแรงตลอดปี',{t:'coconut',p:'#a855f7',f:'#06b6d4'})},5000);
 </script>
 </body>
 </html>
