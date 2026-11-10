@@ -11,7 +11,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;flex-direction:column;align-items:center}
-.stage{position:relative;width:100%;max-width:100%;height:320px;background:linear-gradient(180deg,#080d1e 0%,#122147 65%,#09152e 100%);overflow:hidden;transition:all .8s ease}
+.stage{position:relative;width:100%;max-width:100%;height:340px;background:linear-gradient(180deg,#0a1931 0%,#183153 65%,#0d233a 100%);overflow:hidden;transition:all .8s ease}
 .stage.full{height:calc(100vh - 62px);max-width:100%}
 .stage.fw{background:linear-gradient(180deg,#160826 0%,#341252 65%,#18092b 100%)}
 .stage.fr{background:linear-gradient(180deg,#041a17 0%,#0b362f 65%,#051f1b 100%)}
@@ -20,46 +20,39 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;f
 .hill{position:absolute;bottom:95px;left:-10%;width:70%;height:35px;background:#060a17;border-radius:50% 50% 0 0;opacity:.6;transition:bottom .8s}
 .stage.full .hill{bottom:42vh}
 
-/* เพิ่มอนิเมชันและลวดลายคลื่นน้ำให้ขยับได้สมจริง */
-@keyframes waveMove {
-    0% { background-position-x: 0px; }
-    100% { background-position-x: -100px; }
-}
-
-/* ปรับสไตล์แม่น้ำให้เป็นไล่ระดับสีนุ่มๆ และมีเงาสะท้อนระลอกคลื่น */
+/* ปรับแต่งแม่น้ำให้เป็นโทนฟ้าสดใส มีลูกคลื่นโค้งมนเป็นชั้นๆ แบบในภาพตัวอย่าง */
 .river{
     position:absolute;
     bottom:0;
     left:0;
     width:100%;
-    height:100px;
-    background: linear-gradient(180deg, rgba(15,35,75,.9), #050c1c);
-    border-top: 1px solid rgba(250,204,21,.3);
+    height:120px;
+    background: linear-gradient(180deg, #1e90ff 0%, #0066cc 60%, #004080 100%);
+    border-top: 3px solid rgba(255, 255, 255, 0.3);
     transition: height .8s;
-    overflow: hidden;
-    box-shadow: inset 0 12px 20px rgba(56, 189, 248, 0.15);
+    box-shadow: inset 0 15px 25px rgba(255, 255, 255, 0.25);
 }
 
-/* เพิ่มแสงเงาคลื่นด้านบนผิวน้ำให้ดูขยับไหวเบาๆ */
-.river::after {
+/* เพิ่มชั้นคลื่นโค้งด้านบนผิวน้ำ */
+.river::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -50%;
+    top: -12px;
+    left: 0;
     width: 200%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent, rgba(56, 189, 248, 0.1), transparent);
-    animation: softWave 6s ease-in-out infinite;
+    height: 25px;
+    background: radial-gradient(ellipse at center, rgba(135, 206, 250, 0.6) 0%, transparent 70%);
+    background-size: 40px 25px;
+    animation: waveFlow 4s linear infinite;
 }
 
-@keyframes softWave {
-    0% { transform: translateX(0%); }
-    50% { transform: translateX(25%); }
-    100% { transform: translateX(0%); }
+@keyframes waveFlow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 .stage.full .river{
-    height:43vh;
+    height:45vh;
 }
 
 .mbtn{position:absolute;top:16px;left:16px;z-index:20;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
@@ -86,18 +79,18 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 .prev-row{display:flex;align-items:center;justify-content:space-between;background:#181c26;border:1px solid #262b38;padding:10px 16px;border-radius:12px}
 .go{width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px}
 
-/* กระทงลอยวนซ้ำ + โยกเยกตามคลื่นน้ำ */
+/* ปรับแต่งป้ายชื่อและคำอธิษฐานบนกระทงให้ดูพรีเมียมโค้งมนเหมือนตัวอย่าง */
 .kt{position:absolute;display:flex;flex-direction:column;align-items:center;animation:flt 24s linear infinite;z-index:10}
 @keyframes flt{
     0%{left:-110px;transform:translateY(0px)}
-    25%{transform:translateY(-5px)}
-    50%{transform:translateY(2px)}
-    75%{transform:translateY(-4px)}
+    25%{transform:translateY(-6px)}
+    50%{transform:translateY(3px)}
+    75%{transform:translateY(-5px)}
     100%{left:105%;transform:translateY(0px)}
 }
 
-.tg{background:rgba(15,23,42,.88);border:1px solid rgba(250,204,21,.45);padding:3px 9px;border-radius:10px;font-size:11px;color:#fff;margin-bottom:2px;white-space:nowrap;text-align:center}
-.tg b{color:#fde047;display:block;font-size:11px}
+.tg{background:rgba(255,255,255,0.95);border:1px solid #fcd34d;padding:6px 12px;border-radius:16px;font-size:11px;color:#1e293b;margin-bottom:4px;white-space:nowrap;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.25)}
+.tg b{color:#d97706;display:block;font-size:12px;font-weight:700}
 </style>
 </head>
 <body>
@@ -228,12 +221,12 @@ var fx=document.getElementById('fx');fx.innerHTML='';
 for(var i=0;i<(v=='fr'?20:8);i++){var e=document.createElement('div');e.className=v=='fw'?'fwk':(v=='fr'?'fly':'lnt');e.style.left=(Math.random()*88+5)+'%';e.style.top=v==''?'auto':(Math.random()*45+10)+'%';if(v=='')e.style.bottom='105px';e.style.animationDelay=(Math.random()*3)+'s';fx.appendChild(e)}
 }
 function sT(v,el){d.t=v;el.parentElement.querySelectorAll('.pill').forEach(function(x){x.classList.remove('on')});el.classList.add('on');if(v=='lotus')d.p='#f43f5e';else if(v=='banana')d.p='#4ade80';up()}
-function sC(k,v,el){if(k=='p')d.p=v;else d.f=v;el.parentElement.querySelectorAll('.dot').forEach(function(x){x.classList.remove('on')});el.classList.add('on');up()}
+function sC(k,v,el){if(k=='p')d.p=v;else d.f=v;el.parentElement.querySelectorAll('.dot').format?.()||x=>x;el.parentElement.querySelectorAll('.dot').forEach(function(x){x.classList.remove('on')});el.classList.add('on');up()}
 function sp(n,w,c){
 var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
 total++;document.getElementById('cnt').innerHTML=total+' ใบ';
 var e=document.createElement('div');e.className='kt';var t=Math.floor(Math.random()*55)+10;e.style.top=t+'px';e.style.zIndex=t;
-e.innerHTML='<div class="tg"><b>'+esc(n)+'</b>'+esc(w||'')+'</div>'+svg(c,58);
+e.innerHTML='<div class="tg"><b>'+esc(n)+'</b>'+esc(w||'')+'</div>'+svg(c,68);
 document.getElementById('rv').appendChild(e);
 }
 var isFirst=true;
