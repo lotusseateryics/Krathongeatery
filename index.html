@@ -20,28 +20,30 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;f
 .hill{position:absolute;bottom:95px;left:-10%;width:70%;height:35px;background:#060a17;border-radius:50% 50% 0 0;opacity:.6;transition:bottom .8s}
 .stage.full .hill{bottom:42vh}
 
+/* แม่น้ำสีฟ้าสดใสมีคลื่นนุ่มนวล */
 .river{
     position:absolute;
     bottom:0;
     left:0;
     width:100%;
-    height:120px;
+    height:130px;
     background: linear-gradient(180deg, #1e90ff 0%, #0066cc 60%, #004080 100%);
-    border-top: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid rgba(255, 255, 255, 0.4);
     transition: height .8s;
     box-shadow: inset 0 15px 25px rgba(255, 255, 255, 0.25);
+    overflow: hidden;
 }
 
 .river::before {
     content: '';
     position: absolute;
-    top: -12px;
+    top: -10px;
     left: 0;
     width: 200%;
-    height: 25px;
-    background: radial-gradient(ellipse at center, rgba(135, 206, 250, 0.6) 0%, transparent 70%);
-    background-size: 50px 25px;
-    animation: waveFlow 15s linear infinite;
+    height: 20px;
+    background: radial-gradient(ellipse at center, rgba(135, 206, 250, 0.5) 0%, transparent 70%);
+    background-size: 60px 20px;
+    animation: waveFlow 14s linear infinite;
 }
 
 @keyframes waveFlow {
@@ -77,8 +79,26 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 .prev-row{display:flex;align-items:center;justify-content:space-between;background:#181c26;border:1px solid #262b38;padding:10px 16px;border-radius:12px}
 .go{width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px}
 
-.tg{background:rgba(255,255,255,0.95);border:1px solid #fcd34d;padding:6px 12px;border-radius:16px;font-size:11px;color:#1e293b;margin-bottom:4px;white-space:nowrap;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.25)}
-.tg b{color:#d97706;display:block;font-size:12px;font-weight:700}
+/* กำหนดการจัดวางของตัวกระทงอย่างถูกต้อง ไม่ตั้ง CSS animation ตายตัวที่นี่ */
+.kt{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.tg{background:rgba(255,255,255,0.95);border:1px solid #fcd34d;padding:4px 10px;border-radius:14px;font-size:11px;color:#1e293b;margin-bottom:2px;white-space:nowrap;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.25)}
+.tg b{color:#d97706;display:block;font-size:11px;font-weight:700}
+
+/* อนิเมชันเคลื่อนที่อิสระจากซ้ายไปขวาพร้อมโคลงเคลงเบาๆ */
+@keyframes floatFlow {
+    0% { left: -100px; transform: translateY(0px); }
+    25% { transform: translateY(-4px); }
+    50% { transform: translateY(3px); }
+    75% { transform: translateY(-3px); }
+    100% { left: 105%; transform: translateY(0px); }
+}
 </style>
 </head>
 <body>
@@ -214,19 +234,22 @@ function sC(k,v,el){if(k=='p')d.p=v;else d.f=v;el.parentElement.querySelectorAll
 function sp(n,w,c){
 var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
 total++;document.getElementById('cnt').innerHTML=total+' ใบ';
-var e=document.createElement('div');e.className='kt';
+var e=document.createElement('div');
+e.className='kt';
 
-/* สุ่มตำแหน่งความสูงในแม่น้ำ และกำหนดชื่ออนิเมชันเคลื่อนที่ */
-var randomTop = Math.floor(Math.random() * 65) + 15; 
-var randomDuration = Math.floor(Math.random() * 15) + 25; // ความเร็ว 25-40 วินาที
-var randomDelay = Math.random() * -35;
+// สุ่มความสูง (top) 5px - 60px ภายในแม่น้ำ
+var rTop = Math.floor(Math.random() * 55) + 5; 
+// สุ่มความเร็วลอย (22 ถึง 36 วินาที)
+var rDur = (Math.random() * 14 + 22).toFixed(1);
+// สุ่มจังหวะเริ่มต้น (delay) ไม่ให้เกิดพร้อมกัน
+var rDel = (Math.random() * -30).toFixed(1);
 
-e.style.top = randomTop + '%';
-e.style.zIndex = randomTop;
-e.style.animation = 'fltCustom ' + randomDuration + 's linear infinite';
-e.style.animationDelay = randomDelay + 's';
+e.style.top = rTop + 'px';
+e.style.zIndex = rTop;
+e.style.animation = 'floatFlow ' + rDur + 's linear infinite';
+e.style.animationDelay = rDel + 's';
 
-e.innerHTML='<div class="tg"><b>'+esc(n)+'</b>'+esc(w||'')+'</div>'+svg(c,58);
+e.innerHTML='<div class="tg"><b>'+esc(n)+'</b>'+esc(w||'')+'</div>'+svg(c,52);
 document.getElementById('rv').appendChild(e);
 }
 
@@ -234,7 +257,7 @@ var isFirst=true;
 db.collection("krathongs").orderBy("time","desc").limit(15).onSnapshot(function(snap){
 if(isFirst){
 var arr=[];snap.forEach(function(doc){arr.push(doc.data())});
-arr.reverse().forEach(function(item,idx){setTimeout(function(){sp(item.n,item.w,item.c)},idx*800)});
+arr.reverse().forEach(function(item,idx){setTimeout(function(){sp(item.n,item.w,item.c)},idx*600)});
 isFirst=false;
 }else{
 snap.docChanges().forEach(function(chg){if(chg.type==="added"){var item=chg.doc.data();sp(item.n,item.w,item.c);}});
@@ -264,16 +287,5 @@ else{navigator.clipboard.writeText(window.location.href);alert('คัดลอ�
 }
 up();sBg('');
 </script>
-
-<style>
-/* บังคับให้กระทงวิ่งข้ามจอจากซ้ายไปขวาอย่างอิสระ */
-@keyframes fltCustom {
-    0% { left: -120px; transform: translateY(0px); }
-    25% { transform: translateY(-5px); }
-    50% { transform: translateY(4px); }
-    75% { transform: translateY(-4px); }
-    100% { left: 105%; transform: translateY(0px); }
-}
-</style>
 </body>
 </html>
