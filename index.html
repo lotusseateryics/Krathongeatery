@@ -32,7 +32,6 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;f
     box-shadow: inset 0 15px 25px rgba(255, 255, 255, 0.25);
 }
 
-/* คลื่นน้ำไหลเอื่อยๆ แบบนุ่มนวล */
 .river::before {
     content: '';
     position: absolute;
@@ -217,14 +216,14 @@ var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 total++;document.getElementById('cnt').innerHTML=total+' ใบ';
 var e=document.createElement('div');e.className='kt';
 
-/* สุ่มตำแหน่งความสูง (top) และความเร็วในการลอย (duration) ให้กระจายทั่วผิวน้ำแบบวงกว้าง */
-var randomTop = Math.floor(Math.random() * 70) + 10; // สุ่มตำแหน่งสูงต่ำในแม่น้ำ
-var randomDuration = (Math.random() * 15) + 30;       // สุ่มความเร็ว (30 - 45 วินาที) ให้ลอยช้าเร็วไม่เท่ากัน
-var randomDelay = Math.random() * -30;               // สุ่มจังหวะเวลาเริ่มต้นไม่ให้กองรวมกัน
+/* สุ่มตำแหน่งความสูงในแม่น้ำ และกำหนดชื่ออนิเมชันเคลื่อนที่ */
+var randomTop = Math.floor(Math.random() * 65) + 15; 
+var randomDuration = Math.floor(Math.random() * 15) + 25; // ความเร็ว 25-40 วินาที
+var randomDelay = Math.random() * -35;
 
 e.style.top = randomTop + '%';
 e.style.zIndex = randomTop;
-e.style.animation = 'flt ' + randomDuration + 's linear infinite';
+e.style.animation = 'fltCustom ' + randomDuration + 's linear infinite';
 e.style.animationDelay = randomDelay + 's';
 
 e.innerHTML='<div class="tg"><b>'+esc(n)+'</b>'+esc(w||'')+'</div>'+svg(c,58);
@@ -235,7 +234,7 @@ var isFirst=true;
 db.collection("krathongs").orderBy("time","desc").limit(15).onSnapshot(function(snap){
 if(isFirst){
 var arr=[];snap.forEach(function(doc){arr.push(doc.data())});
-arr.reverse().forEach(function(item,idx){setTimeout(function(){sp(item.n,item.w,item.c)},idx*1000)});
+arr.reverse().forEach(function(item,idx){setTimeout(function(){sp(item.n,item.w,item.c)},idx*800)});
 isFirst=false;
 }else{
 snap.docChanges().forEach(function(chg){if(chg.type==="added"){var item=chg.doc.data();sp(item.n,item.w,item.c);}});
@@ -267,13 +266,13 @@ up();sBg('');
 </script>
 
 <style>
-/* กำหนดอนิเมชันให้กระทงลอยจากซ้ายไปขวาพร้อมโยกขึ้นลงเบาๆ */
-@keyframes flt{
-    0%{left:-110px;transform:translateY(0px)}
-    25%{transform:translateY(-5px)}
-    50%{transform:translateY(3px)}
-    75%{transform:translateY(-4px)}
-    100%{left:105%;transform:translateY(0px)}
+/* บังคับให้กระทงวิ่งข้ามจอจากซ้ายไปขวาอย่างอิสระ */
+@keyframes fltCustom {
+    0% { left: -120px; transform: translateY(0px); }
+    25% { transform: translateY(-5px); }
+    50% { transform: translateY(4px); }
+    75% { transform: translateY(-4px); }
+    100% { left: 105%; transform: translateY(0px); }
 }
 </style>
 </body>
