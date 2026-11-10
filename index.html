@@ -26,19 +26,38 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;f
     100% { background-position-x: -100px; }
 }
 
+/* ปรับสไตล์แม่น้ำให้เป็นไล่ระดับสีนุ่มๆ และมีเงาสะท้อนระลอกคลื่น */
 .river{
     position:absolute;
     bottom:0;
     left:0;
     width:100%;
     height:100px;
-    background: linear-gradient(180deg, rgba(15,35,75,.85), #050c1c);
-    border-top:1px solid rgba(250,204,21,.25);
-    transition:height .8s;
-    /* สร้างลายเส้นคลื่นน้ำด้วย repeating-linear-gradient */
-    background-image: repeating-linear-gradient(45deg, rgba(56, 189, 248, 0.05) 0, rgba(56, 189, 248, 0.05) 10px, transparent 0, transparent 20px);
-    animation: waveMove 3s linear infinite;
+    background: linear-gradient(180deg, rgba(15,35,75,.9), #050c1c);
+    border-top: 1px solid rgba(250,204,21,.3);
+    transition: height .8s;
+    overflow: hidden;
+    box-shadow: inset 0 12px 20px rgba(56, 189, 248, 0.15);
 }
+
+/* เพิ่มแสงเงาคลื่นด้านบนผิวน้ำให้ดูขยับไหวเบาๆ */
+.river::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent, rgba(56, 189, 248, 0.1), transparent);
+    animation: softWave 6s ease-in-out infinite;
+}
+
+@keyframes softWave {
+    0% { transform: translateX(0%); }
+    50% { transform: translateX(25%); }
+    100% { transform: translateX(0%); }
+}
+
 .stage.full .river{
     height:43vh;
 }
