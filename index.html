@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Firebase App (v8) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <!-- Firebase Firestore (v8) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <title>ลอยกระทงออนไลน์</title>
-<script src="https://gstatic.com"></script>
-<script src="https://gstatic.com"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
-body{background:#12151e;color:#f1f5f9;min-height:100vh;display:flex;flex-direction:column;align-items:center}
-.stage{position:relative;width:100%;max-width:480px;height:250px;background:linear-gradient(180deg,#080d1e 0%,#122147 65%,#09152e 100%);overflow:hidden;transition:all .8s ease}
+body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;flex-direction:column;align-items:center}
+.stage{position:relative;width:100%;max-width:100%;height:320px;background:linear-gradient(180deg,#080d1e 0%,#122147 65%,#09152e 100%);overflow:hidden;transition:all .8s ease}
 .stage.full{height:calc(100vh - 62px);max-width:100%}
 .stage.fw{background:linear-gradient(180deg,#160826 0%,#341252 65%,#18092b 100%)}
 .stage.fr{background:linear-gradient(180deg,#041a17 0%,#0b362f 65%,#051f1b 100%)}
@@ -23,7 +22,7 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;display:flex;flex-directi
 .river{position:absolute;bottom:0;left:0;width:100%;height:100px;background:linear-gradient(180deg,rgba(15,35,75,.85),#050c1c);border-top:1px solid rgba(250,204,21,.25);transition:height .8s}
 .stage.full .river{height:43vh}
 .mbtn{position:absolute;top:16px;left:16px;z-index:20;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
-.b-bar{position:fixed;bottom:20px;left:0;width:100%;padding:0 16px;z-index:40;display:none;justify-content:space-between;gap:10px}
+.b-bar{position:fixed;bottom:20px;left:0;width:100%;padding:0 16px;z-index:40;display:none;justify-content:center;gap:10px}
 .shr-btn{background:rgba(15,23,42,.9);border:1px solid #38bdf8;color:#38bdf8;padding:11px 16px;border-radius:25px;font-size:13px;font-weight:600;cursor:pointer}
 .reopen{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:11px 18px;border-radius:25px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.5)}
 .lnt{position:absolute;width:10px;height:14px;background:radial-gradient(#fef08a,#f97316);border-radius:3px;box-shadow:0 0 10px #f97316;animation:up 8s linear infinite}
@@ -32,11 +31,11 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;display:flex;flex-directi
 @keyframes bm{0%{transform:scale(.1);opacity:1}100%{transform:scale(1);opacity:0;box-shadow:0 -28px 0 #f43f5e,24px -14px 0 #facc15,24px 14px 0 #38bdf8,0 28px 0 #4ade80,-24px 14px 0 #c084fc,-24px -14px 0 #fb923c}}
 .fly{position:absolute;width:5px;height:5px;background:#bef264;border-radius:50%;box-shadow:0 0 8px #bef264;animation:bk 2.2s ease-in-out infinite alternate}
 @keyframes bk{0%{opacity:.15}100%{opacity:1;transform:translate(10px,-10px)}}
-.stats{width:100%;max-width:480px;background:#181c26;display:grid;grid-template-columns:repeat(3,1fr);padding:12px 8px;text-align:center;border-bottom:1px solid #262b38;transition:max-width .8s}
+.stats{width:100%;max-width:100%;background:#181c26;display:grid;grid-template-columns:repeat(3,1fr);padding:12px 8px;text-align:center;border-bottom:1px solid #262b38;transition:max-width .8s}
 .stats.full{max-width:100%}
 .st-lbl{font-size:11px;color:#94a3b8;margin-bottom:3px}
 .st-val{font-size:14px;font-weight:700;color:#fbbf24}
-.form{width:100%;max-width:480px;padding:18px 20px 40px;display:flex;flex-direction:column;gap:14px}
+.form{width:100%;max-width:600px;padding:24px 20px 40px;display:flex;flex-direction:column;gap:14px}
 .lbl{font-size:13px;color:#cbd5e1;margin-bottom:6px;display:block}
 select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;padding:12px 14px;border-radius:10px;font-size:14px;outline:none}
 .pills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -85,7 +84,7 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 <button type="button" class="pill" onclick="sT('lotus',this)">กลีบบัว</button>
 <button type="button" class="pill" onclick="sT('coconut',this)">กะลา</button>
 <button type="button" class="pill" onclick="sT('bread',this)">ขนมปังเต่า</button>
-</select>
+</div>
 </div>
 
 <div>
@@ -99,7 +98,7 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 <div class="dot" style="background:#fb923c" onclick="sC('p','#fb923c',this)"></div>
 <div class="dot" style="background:#fef08a" onclick="sC('p','#fef08a',this)"></div>
 <div class="dot" style="background:#ffffff" onclick="sC('p','#ffffff',this)"></div>
-</select>
+</div>
 </div>
 
 <div>
@@ -113,7 +112,7 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 <div class="dot" style="background:#06b6d4" onclick="sC('f','#06b6d4',this)"></div>
 <div class="dot" style="background:#4ade80" onclick="sC('f','#4ade80',this)"></div>
 <div class="dot" style="background:#ffffff" onclick="sC('f','#ffffff',this)"></div>
-</select>
+</div>
 </div>
 
 <div class="prev-row">
@@ -138,6 +137,7 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 <button type="button" class="shr-btn" onclick="shareWeb()">🔗 แชร์ชวนเพื่อน</button>
 <button type="button" class="reopen" onclick="showForm()">➕ สร้างกระทงเพิ่ม</button>
 </div>
+
 <script>
 var firebaseConfig = {
   apiKey: "AIzaSyDFoU2C8JT9Sap_fysr7eixDclufc-U1UU",
@@ -224,5 +224,3 @@ up();sBg('');
 </script>
 </body>
 </html>
-
-
