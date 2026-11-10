@@ -55,6 +55,10 @@ body{background:#12151e;color:#f1f5f9;min-height:100vh;width:100%;display:flex;f
     height:45vh;
 }
 
+/* เอฟเฟกต์โคมลอยบนท้องฟ้า */
+.lnt{position:absolute;width:12px;height:16px;background:radial-gradient(#fef08a,#f97316);border-radius:4px;box-shadow:0 0 12px #f97316;animation:upSky 8s linear infinite}
+@keyframes upSky{0%{transform:translateY(220px);opacity:0}20%{opacity:1}100%{transform:translateY(-260px);opacity:0}}
+
 .mbtn{position:absolute;top:16px;left:16px;z-index:20;background:rgba(15,23,42,.85);border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 14px;border-radius:20px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
 .b-bar{position:fixed;bottom:20px;left:0;width:100%;padding:0 16px;z-index:40;display:none;justify-content:center;gap:10px}
 .shr-btn{background:rgba(15,23,42,.9);border:1px solid #38bdf8;color:#38bdf8;padding:11px 16px;border-radius:25px;font-size:13px;font-weight:600;cursor:pointer}
@@ -79,7 +83,6 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 .prev-row{display:flex;align-items:center;justify-content:space-between;background:#181c26;border:1px solid #262b38;padding:10px 16px;border-radius:12px}
 .go{width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#fff;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px}
 
-/* กำหนดการจัดวางของตัวกระทงอย่างถูกต้อง ไม่ตั้ง CSS animation ตายตัวที่นี่ */
 .kt{
     position: absolute;
     display: flex;
@@ -91,7 +94,6 @@ select,input{width:100%;background:#1e2330;border:1px solid #333b4d;color:#fff;p
 .tg{background:rgba(255,255,255,0.95);border:1px solid #fcd34d;padding:4px 10px;border-radius:14px;font-size:11px;color:#1e293b;margin-bottom:2px;white-space:nowrap;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,0.25)}
 .tg b{color:#d97706;display:block;font-size:11px;font-weight:700}
 
-/* อนิเมชันเคลื่อนที่อิสระจากซ้ายไปขวาพร้อมโคลงเคลงเบาๆ */
 @keyframes floatFlow {
     0% { left: -100px; transform: translateY(0px); }
     25% { transform: translateY(-4px); }
@@ -226,7 +228,21 @@ var isFull=s.classList.contains('full');
 s.className='stage'+(isFull?' full':'')+(v?' '+v:'');
 document.getElementById('bgTxt').innerHTML=v=='fw'?'พลุงานวัด':(v=='fr'?'หิ่งห้อยประกาย':'คืนเดือนเพ็ญ');
 var fx=document.getElementById('fx');fx.innerHTML='';
-for(var i=0;i<(v=='fr'?20:8);i++){var e=document.createElement('div');e.className=v=='fw'?'fwk':(v=='fr'?'fly':'lnt');e.style.left=(Math.random()*88+5)+'%';e.style.top=v==''?'auto':(Math.random()*45+10)+'%';if(v=='')e.style.bottom='105px';e.style.animationDelay=(Math.random()*3)+'s';fx.appendChild(e)}
+
+// หากเลือกฉากว่าง (คืนเดือนเพ็ญ) จะสร้างโคมลอย (lnt) ขึ้นมาบนฟ้า
+var count = (v=='fr' ? 20 : (v=='fw' ? 8 : 8));
+for(var i=0; i<count; i++){
+    var e=document.createElement('div');
+    e.className = v=='fw' ? 'fwk' : (v=='fr' ? 'fly' : 'lnt');
+    e.style.left = (Math.random()*88+5) + '%';
+    if(v==''){
+        e.style.bottom = '105px';
+    } else {
+        e.style.top = (Math.random()*45+10) + '%';
+    }
+    e.style.animationDelay = (Math.random()*3) + 's';
+    fx.appendChild(e);
+}
 }
 function sT(v,el){d.t=v;el.parentElement.querySelectorAll('.pill').forEach(function(x){x.classList.remove('on')});el.classList.add('on');if(v=='lotus')d.p='#f43f5e';else if(v=='banana')d.p='#4ade80';up()}
 function sC(k,v,el){if(k=='p')d.p=v;else d.f=v;el.parentElement.querySelectorAll('.dot').forEach(function(x){x.classList.remove('on')});el.classList.add('on');up()}
@@ -237,11 +253,8 @@ total++;document.getElementById('cnt').innerHTML=total+' ใบ';
 var e=document.createElement('div');
 e.className='kt';
 
-// สุ่มความสูง (top) 5px - 60px ภายในแม่น้ำ
 var rTop = Math.floor(Math.random() * 55) + 5; 
-// สุ่มความเร็วลอย (22 ถึง 36 วินาที)
 var rDur = (Math.random() * 14 + 22).toFixed(1);
-// สุ่มจังหวะเริ่มต้น (delay) ไม่ให้เกิดพร้อมกัน
 var rDel = (Math.random() * -30).toFixed(1);
 
 e.style.top = rTop + 'px';
